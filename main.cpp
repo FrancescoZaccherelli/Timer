@@ -49,8 +49,24 @@ class Tempo{
         int ora;
         int minuto;
         int secondo;
+        bool operativo;
+
+    void tick(){
+        secondo++;
+        if (secondo >= 60) {
+            secondo = 0;
+            minuto++;
+            if (minuto >= 60) {
+                minuto = 0;
+                ora++;
+                if (ora >= 24) {
+                    ora = 0;
+                }
+            }
+        }
+    }
     public:
-        Tempo (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), secondo(secondo) {
+        Tempo (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), secondo(secondo) , operativo(false) {
             if (ora < 0 || ora > 23) {
                 std::cout << "Errore: ora non valida" << std::endl;
             }
@@ -60,8 +76,22 @@ class Tempo{
             if (secondo < 0 || secondo > 59) {
                 std::cout << "Errore: secondo non valido" << std::endl;
             }
+
         }
-        void avanza(){};
+
+        void avanza() {
+            operativo = true;
+            while (operativo) {
+                std::cout << "\r"
+                         << std::setw(2) << std::setfill('0') << ora << ":"
+                         << std::setw(2) << std::setfill('0') << minuto << ":"
+                         << std::setw(2) << std::setfill('0') << secondo
+                         << std::flush;
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                tick();
+
+            }
+        }
    };
 class Timer {
 private:
@@ -118,11 +148,10 @@ public:
 };
 
 int main() {
-    Data data(14, 8, 2025);
-    Timer timer1(0, 1, 0);
-    timer1.start();
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-    timer1.stop();
+    Timer timer(0, 0, 10);
+    timer.start();
+    Tempo Orario(20 , 59, 50);
+    Orario.avanza();
 
 
 }
