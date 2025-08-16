@@ -7,6 +7,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include "Data.h"
 
 class Tempo {
 private:
@@ -14,10 +15,11 @@ private:
     int minuto;
     int secondo;
     bool operativo;
+    Data* data;
     void tick();
 
     public:
-    Tempo (int ora, int minuto, int secondo);
+    Tempo (int ora, int minuto, int secondo, Data* data = nullptr);
     void avanza();
     void ferma();
 };

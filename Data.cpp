@@ -9,6 +9,9 @@ Data::Data(int giorno, int mese, int anno)
     if (anno < 1900 || anno > 2100) {
         std::cout << "Errore: anno non valido" << std::endl;
     }
+    if (anno % 4 == 0) {
+        giorniFinali[1]= 29;
+    }
 
     switch (mese) {
         case 1: case 3: case 5: case 7: case 8: case 10: case 12:
@@ -33,3 +36,23 @@ Data::Data(int giorno, int mese, int anno)
             std::cout << "Errore: mese non valido" << std::endl;
     }
 }
+
+void Data::avanzaData() {
+    giorno++;
+    if (giorno >= giorniFinali[mese-1]){
+        giorno = 1;
+        mese++;
+        if (mese++ >= 12) {
+            mese = 1;
+            anno++;
+        }
+    }
+    std::cout <<"\nNuova data : ";
+    stampaData();
+
+}
+
+void Data::stampaData() {
+    std::cout<<giorno<<"/"<<mese<<"/"<<anno<<std::endl;
+}
+

@@ -4,7 +4,8 @@
 
 #include "Tempo.h"
 
-Tempo::Tempo (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), secondo(secondo) , operativo(false) {
+Tempo::Tempo(int ora, int minuto, int secondo, Data* data) : ora(ora), minuto(minuto), secondo(secondo),
+                                                                       operativo(false), data(data) {
     if (ora < 0 || ora > 23) {
         std::cout << "Errore: ora non valida" << std::endl;
     }
@@ -25,6 +26,9 @@ Tempo::Tempo (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), seco
                 ora++;
                 if (ora >= 24) {
                     ora = 0;
+                    if (data) {
+                        data->avanzaData();
+                    }
                 }
             }
         }
