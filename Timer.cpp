@@ -4,7 +4,7 @@
 
 #include "Timer.h"
 
-Timer::Timer (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), secondo(secondo), avviato(false) {
+Timer::Timer (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), secondo(secondo) {
     if (ora < 0 || ora > 23) {
         std::cout << "Errore: ora non valida" << std::endl;
     }
@@ -17,27 +17,13 @@ Timer::Timer (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), seco
     secondiTotale = secondo + minuto*60 + ora*3600;
 }
 
-void Timer::start() {
-    std::chrono::seconds durataTotale(secondiTotale);
-    auto start = std::chrono::steady_clock::now();
-    if (avviato != true) {
-        avviato = true;
-    }
-    while (avviato == true) {
-        auto sOra = std::chrono::steady_clock::now();
-        auto sPassati = duration_cast<std::chrono::seconds>(sOra - start);
-        auto sRimanenti = durataTotale - sPassati;
 
-        if (sRimanenti.count() <= 0) {
-            std::cout <<"Tempo scaduto"<<std::endl;
-            break;
-        }
-        std::cout<<sRimanenti.count()<< " secondi"<<std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
-
-
-
+void Timer::tick() { // un passo di 1 secondo
+    if (secondiTotale <= 0) return;
+    secondiTotale--;
+    ora = secondiTotale / 3600;
+    minuto = (secondiTotale % 3600) / 60;
+    secondo = secondiTotale % 60;
 }
 void Timer::stop() {
     avviato = false;
@@ -48,3 +34,13 @@ void Timer::reset() {
     secondiTotale = 0;
     std::cout<<"Tempo resettato"<<std::endl;
 };
+
+int Timer::getOra() {
+    return ora;
+}
+int Timer::getMinuto() {
+    return minuto;
+}
+int Timer::getSecondo() {
+    return secondo;
+}

@@ -4,6 +4,9 @@
 
 #include "Data.h"
 
+#include <sstream>
+
+
 Data::Data(int giorno, int mese, int anno)
     : giorno(giorno), mese(mese), anno(anno) {
     if (anno < 1900 || anno > 2100) {
@@ -55,4 +58,32 @@ void Data::avanzaData() {
 void Data::stampaData() {
     std::cout<<giorno<<"/"<<mese<<"/"<<anno<<std::endl;
 }
+
+int Data::getGiorno() const{
+    return giorno;
+}
+int Data::getMese() const {
+    return mese;
+}
+int Data::getAnno() const{
+    return anno;
+}
+
+std::string Data::toString(FormatoData formato) const {
+
+    switch (formato) {
+        case FormatoData::breve:
+            return std::to_string(giorno)+ std::to_string(mese)+ std::to_string(anno);
+            break;
+        case FormatoData::esteso:
+            return std::to_string(giorno) + m[mese-1] + std::to_string(anno);
+            break;
+        case FormatoData::americano:
+            return std::to_string(mese)+ std::to_string(giorno)+ std::to_string(anno);
+            break;
+    }
+    return "C'è stato un errore imprevisto";
+}
+
+
 

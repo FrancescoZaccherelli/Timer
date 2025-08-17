@@ -8,6 +8,7 @@
 #include <chrono>
 #include <thread>
 #include "Data.h"
+enum FormatoTempo{h24, h12};
 
 class Tempo {
 private:
@@ -16,12 +17,15 @@ private:
     int secondo;
     bool operativo;
     Data* data;
-    void tick();
 
     public:
     Tempo (int ora, int minuto, int secondo, Data* data = nullptr);
-    void avanza();
+    void tick();
     void ferma();
+    int getOra() const;
+    int getMinuto() const;
+    int getSecondo() const;
+    std::string toString(FormatoTempo formato) const;
 };
 
 

@@ -17,9 +17,12 @@ private:
     int secondiTotale;
 public:
     Timer (int ora, int minuto, int secondo);
-    void start();
+    void tick();
     void stop();
     void reset();
+    int getOra();
+    int getMinuto();
+    int getSecondo();
 };
 
 

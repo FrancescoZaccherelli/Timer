@@ -5,7 +5,7 @@
 #include "Tempo.h"
 
 Tempo::Tempo(int ora, int minuto, int secondo, Data* data) : ora(ora), minuto(minuto), secondo(secondo),
-                                                                       operativo(false), data(data) {
+                                                                       data(data) {
     if (ora < 0 || ora > 23) {
         std::cout << "Errore: ora non valida" << std::endl;
     }
@@ -33,21 +33,30 @@ Tempo::Tempo(int ora, int minuto, int secondo, Data* data) : ora(ora), minuto(mi
             }
         }
     }
+int Tempo::getOra() const {
+    return ora;
+}
+int Tempo::getMinuto() const {
+    return minuto;
+}
+int Tempo::getSecondo() const {
+    return secondo;
+}
 
-void Tempo::avanza() {
-    operativo = true;
-    while (operativo) {
-        std::cout << "\r"
-                 << std::setw(2) << std::setfill('0') << ora << ":"
-                 << std::setw(2) << std::setfill('0') << minuto << ":"
-                 << std::setw(2) << std::setfill('0') << secondo
-                 << std::flush;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        tick();
-
+std::string Tempo::toString(FormatoTempo formato) const {
+    int mostraOra = ora;
+    std::string amPm = "";
+    if (formato == h12) {
+        amPm = (ora >= 12) ? " PM" : " AM";
+        mostraOra = ora % 12;
+        if (mostraOra == 0) mostraOra = 12;
     }
+    std::string minStr = (minuto < 10) ? "0" + std::to_string(minuto) : std::to_string(minuto);
+    std::string secStr = (secondo < 10) ? "0" + std::to_string(secondo) : std::to_string(secondo);
+    std::string oraStr = (mostraOra < 10 && formato == h24) ? "0" + std::to_string(mostraOra) : std::to_string(mostraOra);
+
+    return oraStr + ":" + minStr + ":" + secStr + amPm;
 }
 
-void Tempo::ferma() {
-    operativo = false;
-}
+
+
