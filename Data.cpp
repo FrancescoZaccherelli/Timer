@@ -73,13 +73,13 @@ std::string Data::toString(FormatoData formato) const {
 
     switch (formato) {
         case FormatoData::breve:
-            return std::to_string(giorno)+ std::to_string(mese)+ std::to_string(anno);
+            return std::to_string(giorno)+" "+ std::to_string(mese)+ " "+std::to_string(anno);
             break;
         case FormatoData::esteso:
-            return std::to_string(giorno) + m[mese-1] + std::to_string(anno);
+            return std::to_string(giorno) +" "+ m[mese-1] +" "+ std::to_string(anno);
             break;
         case FormatoData::americano:
-            return std::to_string(mese)+ std::to_string(giorno)+ std::to_string(anno);
+            return std::to_string(mese)+" "+ std::to_string(giorno)+" "+ std::to_string(anno);
             break;
     }
     return "C'è stato un errore imprevisto";

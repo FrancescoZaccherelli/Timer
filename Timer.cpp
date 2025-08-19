@@ -25,15 +25,6 @@ void Timer::tick() { // un passo di 1 secondo
     minuto = (secondiTotale % 3600) / 60;
     secondo = secondiTotale % 60;
 }
-void Timer::stop() {
-    avviato = false;
-    std::cout<<"Tempo fermato"<<std::endl;
-};
-void Timer::reset() {
-    avviato = false;
-    secondiTotale = 0;
-    std::cout<<"Tempo resettato"<<std::endl;
-};
 
 int Timer::getOra() {
     return ora;
