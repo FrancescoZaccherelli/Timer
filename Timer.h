@@ -4,9 +4,6 @@
 
 #ifndef TIMER_TIMER_H
 #define TIMER_TIMER_H
-#include <iostream>
-#include<chrono>
-#include <thread>
 
 class Timer {
 private:

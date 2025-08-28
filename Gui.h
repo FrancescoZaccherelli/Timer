@@ -1,11 +1,10 @@
 #ifndef TIMER_GUI_H
 #define TIMER_GUI_H
-#include <QWidget>
+
 #include <QLabel>
 #include <QPushButton>
 #include <QComboBox>
 #include <QTimer>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
 
 #include "Data.h"

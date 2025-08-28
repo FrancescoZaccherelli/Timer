@@ -4,9 +4,8 @@
 
 #ifndef TIMER_TEMPO_H
 #define TIMER_TEMPO_H
-#include <iostream>
+
 #include <chrono>
-#include <thread>
 #include "Data.h"
 enum FormatoTempo{h24, h12};
 

@@ -3,16 +3,17 @@
 //
 
 #include "Timer.h"
+#include <stdexcept>
 
 Timer::Timer (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), secondo(secondo) {
     if (ora < 0 || ora > 23) {
-        std::cout << "Errore: ora non valida" << std::endl;
+        throw std::invalid_argument("Timer: ora non valida (0-23)");
     }
     if (minuto < 0 || minuto > 59) {
-        std::cout << "Errore: minuto non valido" << std::endl;
+        throw std::invalid_argument("Timer: minuto non valido (0-59)");
     }
     if (secondo < 0 || secondo > 59) {
-        std::cout << "Errore: secondo non valido" << std::endl;
+        throw std::invalid_argument("Timer: secondo non valido (0-59)");
     }
     secondiTotale = secondo + minuto*60 + ora*3600;
 }

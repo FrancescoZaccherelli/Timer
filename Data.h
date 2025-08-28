@@ -4,9 +4,8 @@
 
 #ifndef TIMER_DATA_H
 #define TIMER_DATA_H
-#include <iostream>
+
 #include <vector>
-#include <QString>
 #include <QVector>
 enum class FormatoData{breve, esteso, americano};
 

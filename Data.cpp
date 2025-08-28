@@ -4,39 +4,26 @@
 
 #include "Data.h"
 
-#include <sstream>
 
+#include <sstream>
+#include <stdexcept>
 
 Data::Data(int giorno, int mese, int anno)
     : giorno(giorno), mese(mese), anno(anno) {
     if (anno < 1900 || anno > 2100) {
-        std::cout << "Errore: anno non valido" << std::endl;
+        throw std::invalid_argument("Data: anno non valido (1900-2100)");
     }
     if (anno % 4 == 0) {
-        giorniFinali[1]= 29;
+        giorniFinali[1] = 29;
     }
 
-    switch (mese) {
-        case 1: case 3: case 5: case 7: case 8: case 10: case 12:
-            if (giorno > 31 || giorno < 1) {
-                std::cout << "Errore: giorno non valido" << std::endl;
-            }
-            break;
-        case 4: case 6: case 9: case 11:
-            if (giorno > 30 || giorno < 1) {
-                std::cout << "Errore: giorno non valido" << std::endl;
-            }
-            break;
-        case 2:
-            if (anno % 4 == 0 && (giorno > 29 || giorno < 1)) {
-                std::cout << "Errore: giorno non valido" << std::endl;
-            }
-            if (anno % 4 != 0 && (giorno > 28 || giorno < 1)) {
-                std::cout << "Errore: giorno non valido" << std::endl;
-            }
-            break;
-        default:
-            std::cout << "Errore: mese non valido" << std::endl;
+    if (mese < 1 || mese > 12) {
+        throw std::invalid_argument("Data: mese non valido (1-12)");
+    }
+
+
+    if (giorno < 1 || giorno > giorniFinali[mese - 1]) {
+        throw std::invalid_argument("Data: giorno non valido per il mese specificato");
     }
 }
 

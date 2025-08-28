@@ -3,36 +3,37 @@
 //
 
 #include "Tempo.h"
+#include <stdexcept>
 
-Tempo::Tempo(int ora, int minuto, int secondo, Data* data) : ora(ora), minuto(minuto), secondo(secondo),
-                                                                       data(data) {
+Tempo::Tempo(int ora, int minuto, int secondo, Data* data)
+    : ora(ora), minuto(minuto), secondo(secondo), data(data) {
     if (ora < 0 || ora > 23) {
-        std::cout << "Errore: ora non valida" << std::endl;
+        throw std::invalid_argument("Tempo: ora non valida (0-23)");
     }
     if (minuto < 0 || minuto > 59) {
-        std::cout << "Errore: minuto non valido" << std::endl;
+        throw std::invalid_argument("Tempo: minuto non valido (0-59)");
     }
     if (secondo < 0 || secondo > 59) {
-        std::cout << "Errore: secondo non valido" << std::endl;
+        throw std::invalid_argument("Tempo: secondo non valido (0-59)");
     }
 }
-    void Tempo::tick(){
-        secondo++;
-        if (secondo >= 60) {
-            secondo = 0;
-            minuto++;
-            if (minuto >= 60) {
-                minuto = 0;
-                ora++;
-                if (ora >= 24) {
-                    ora = 0;
-                    if (data) {
-                        data->avanzaData();
-                    }
+void Tempo::tick(){
+    secondo++;
+    if (secondo >= 60) {
+        secondo = 0;
+        minuto++;
+        if (minuto >= 60) {
+            minuto = 0;
+            ora++;
+            if (ora >= 24) {
+                ora = 0;
+                if (data) {
+                    data->avanzaData();
                 }
             }
         }
     }
+}
 int Tempo::getOra() const {
     return ora;
 }
