@@ -27,6 +27,7 @@ Data::Data(int giorno, int mese, int anno)
     }
 }
 
+// Avanza di un giorno in base al mese o all'anno
 void Data::avanzaData() {
     giorno++;
     if (giorno >= giorniFinali[mese-1]){
@@ -51,6 +52,7 @@ int Data::getAnno() const{
     return anno;
 }
 
+// Ritorna la data in uno dei tre formati
 std::string Data::toString(FormatoData formato) const {
 
     switch (formato) {

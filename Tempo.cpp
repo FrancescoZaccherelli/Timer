@@ -17,6 +17,8 @@ Tempo::Tempo(int ora, int minuto, int secondo, Data* data)
         throw std::invalid_argument("Tempo: secondo non valido (0-59)");
     }
 }
+
+// Avanza di un secondo in base ai minuti e alle ore
 void Tempo::tick(){
     secondo++;
     if (secondo >= 60) {
@@ -44,6 +46,7 @@ int Tempo::getSecondo() const {
     return secondo;
 }
 
+// Ritorna il temo in uno dei due formati
 std::string Tempo::toString(FormatoTempo formato) const {
     int mostraOra = ora;
     std::string amPm = "";

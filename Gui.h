@@ -13,11 +13,11 @@
 
 class Gui : public QWidget {
 public:
-    // Costruttore che riceve i modelli inizializzati nel main
+    // Riceve i dati dei costruttori dal main
     explicit Gui(const Data& dataInit, const Tempo& tempoInit, const Timer& timerInit, QWidget* parent = nullptr);
 
 private:
-    // UI
+    // vari parti della ui
     QVBoxLayout* mainLayout{};
     QHBoxLayout* topLayout{};
     QLabel* dataLabel{};
@@ -30,26 +30,26 @@ private:
     QPushButton* startBtn{};
     QPushButton* stopBtn{};
 
-    // Timers
+    // Timer basati su QTimer
     QTimer* orologio{};
     QTimer* orologioTimer{};
 
-    // Modello (copie degli oggetti passati dal main)
+    //  copia degli oggetti presi dal main
     Data data;
     Tempo tempo;
     Timer timer;
 
-    // Helpers
-    FormatoData currentDataFmt() const;
-    FormatoTempo currentTempoFmt() const;
+    // Ritorna i formato corrente presente nel menù a tendina
+    FormatoData FormatoDataCorrente() const;
+    FormatoTempo FormatoTempoCorrente() const;
 
 private:
     void onTickOrologio();
     void onTickTimer();
     void onStart();
     void onStop();
-    void onDataFmtChanged(int);
-    void onTempoFmtChanged(int);
+    void CambioFormatoData(int);
+    void CambioFormatoTempo(int);
 };
 
 #endif //TIMER_GUI_H

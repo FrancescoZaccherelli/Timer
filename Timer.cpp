@@ -18,8 +18,8 @@ Timer::Timer (int ora, int minuto, int secondo) : ora(ora), minuto(minuto), seco
     secondiTotale = secondo + minuto*60 + ora*3600;
 }
 
-
-void Timer::tick() { // un passo di 1 secondo
+// Va indietro du un scondo riaggiornando ora e minuti
+void Timer::tick() {
     if (secondiTotale <= 0) return;
     secondiTotale--;
     ora = secondiTotale / 3600;

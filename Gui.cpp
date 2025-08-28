@@ -12,7 +12,7 @@ Gui::Gui(const Data& dataInit, const Tempo& tempoInit, const Timer& timerInit, Q
     setWindowTitle("App");
     resize(800, 600);
 
-    // Layout principali
+    // Layout principali e vari menù a tendina e etichette
     mainLayout = new QVBoxLayout(this);
 
     topLayout = new QHBoxLayout();
@@ -34,6 +34,7 @@ Gui::Gui(const Data& dataInit, const Tempo& tempoInit, const Timer& timerInit, Q
     topLayout->addWidget(tempoFmtCombo);
     mainLayout->addLayout(topLayout);
 
+    // Display del Timer e pulsanti
     timerLabel = new QLabel("00:00:00");
     timerLabel->setAlignment(Qt::AlignCenter);
     mainLayout->addWidget(timerLabel);
@@ -45,15 +46,15 @@ Gui::Gui(const Data& dataInit, const Tempo& tempoInit, const Timer& timerInit, Q
     rowBtns->addWidget(stopBtn);
     mainLayout->addLayout(rowBtns);
 
-    // Stato iniziale etichette
-    dataLabel->setText(QString::fromStdString(data.toString(currentDataFmt())));
-    oraLabel->setText(QString::fromStdString(tempo.toString(currentTempoFmt())));
+    // Stato iniziale etichette in base a come scritti
+    dataLabel->setText(QString::fromStdString(data.toString(FormatoDataCorrente())));
+    oraLabel->setText(QString::fromStdString(tempo.toString(FormatoTempoCorrente())));
     timerLabel->setText(QString("%1,%2,%3")
                             .arg(timer.getOra(), 2, 10, QChar('0'))
                             .arg(timer.getMinuto(), 2, 10, QChar('0'))
                             .arg(timer.getSecondo(), 2, 10, QChar('0')));
 
-    // Timers
+    // Creazione timer di Qt
     orologio = new QTimer(this);
     orologioTimer = new QTimer(this);
 
@@ -66,14 +67,15 @@ Gui::Gui(const Data& dataInit, const Tempo& tempoInit, const Timer& timerInit, Q
     connect(startBtn, &QPushButton::clicked, this, &Gui::onStart);
     connect(stopBtn, &QPushButton::clicked, this, &Gui::onStop);
 
-    // Cambi formato
+    // Cambi formato in ase al menù a tendina
     connect(dataFmtCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &Gui::onDataFmtChanged);
+            this, &Gui::CambioFormatoData);
     connect(tempoFmtCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
-            this, &Gui::onTempoFmtChanged);
+            this, &Gui::CambioFormatoTempo);
 }
 
-FormatoData Gui::currentDataFmt() const {
+
+FormatoData Gui::FormatoDataCorrente() const {
     switch (dataFmtCombo->currentIndex()) {
         case 0: return FormatoData::breve;
         case 1: return FormatoData::esteso;
@@ -81,10 +83,11 @@ FormatoData Gui::currentDataFmt() const {
     }
 }
 
-FormatoTempo Gui::currentTempoFmt() const {
+FormatoTempo Gui::FormatoTempoCorrente() const {
     return tempoFmtCombo->currentIndex() == 0 ? FormatoTempo::h24 : FormatoTempo::h12;
 }
 
+//Avanza di un secondo e eventualmente avanza la data
 void Gui::onTickOrologio() {
     tempo.tick();
 
@@ -92,10 +95,11 @@ void Gui::onTickOrologio() {
         data.avanzaData();
     }
 
-    dataLabel->setText(QString::fromStdString(data.toString(currentDataFmt())));
-    oraLabel->setText(QString::fromStdString(tempo.toString(currentTempoFmt())));
+    dataLabel->setText(QString::fromStdString(data.toString(FormatoDataCorrente())));
+    oraLabel->setText(QString::fromStdString(tempo.toString(FormatoTempoCorrente())));
 }
 
+// Indietreggia di 1
 void Gui::onTickTimer() {
     timer.tick();
     timerLabel->setText(QString("%1,%2,%3")
@@ -104,22 +108,26 @@ void Gui::onTickTimer() {
                             .arg(timer.getSecondo(), 2, 10, QChar('0')));
 }
 
+// Avvia se fermo
 void Gui::onStart() {
     if (!orologioTimer->isActive()) {
         orologioTimer->start(1000);
     }
 }
 
+// Ferma se attivo
 void Gui::onStop() {
     if (orologioTimer->isActive()) {
         orologioTimer->stop();
     }
 }
 
-void Gui::onDataFmtChanged(int) {
-    dataLabel->setText(QString::fromStdString(data.toString(currentDataFmt())));
+// Cambia formato al label data
+void Gui::CambioFormatoData(int) {
+    dataLabel->setText(QString::fromStdString(data.toString(FormatoDataCorrente())));
 }
 
-void Gui::onTempoFmtChanged(int) {
-    oraLabel->setText(QString::fromStdString(tempo.toString(currentTempoFmt())));
+// Cambia formato al label tempo
+void Gui::CambioFormatoTempo(int) {
+    oraLabel->setText(QString::fromStdString(tempo.toString(FormatoTempoCorrente())));
 }
