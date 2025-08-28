@@ -24,7 +24,6 @@ public:
     Data(int giorno, int mese, int anno);
 
     void avanzaData();
-    void stampaData();
 
     int getGiorno() const;
     int getMese() const;

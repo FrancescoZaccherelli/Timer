@@ -50,14 +50,9 @@ void Data::avanzaData() {
             anno++;
         }
     }
-    std::cout <<"\nNuova data : ";
-    stampaData();
-
 }
 
-void Data::stampaData() {
-    std::cout<<giorno<<"/"<<mese<<"/"<<anno<<std::endl;
-}
+
 
 int Data::getGiorno() const{
     return giorno;

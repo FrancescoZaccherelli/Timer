@@ -12,6 +12,8 @@ add_executable(TimerQt
         Tempo.h
         Timer.cpp
         Timer.h
+        Gui.cpp
+        Gui.h
 )
 
 target_link_libraries(TimerQt Qt5::Widgets)
