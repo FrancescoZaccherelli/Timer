@@ -15,10 +15,10 @@ private:
     int minuto;
     int secondo;
     bool operativo;
-    Data* data;
+    std::unique_ptr<Data> data;
 
     public:
-    Tempo (int ora, int minuto, int secondo, Data* data = nullptr);
+    Tempo (int ora, int minuto, int secondo, std::unique_ptr<Data> data = nullptr);
     void tick();
     void ferma();
     int getOra() const;

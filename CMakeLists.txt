@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 3.20)
 project(Timer)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -17,3 +17,6 @@ add_executable(TimerQt
 )
 
 target_link_libraries(TimerQt Qt5::Widgets)
+include(CTest)
+enable_testing()
+add_subdirectory(test)

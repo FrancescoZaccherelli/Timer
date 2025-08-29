@@ -3,11 +3,12 @@
 #include <QString>
 #include <QChar>
 
-Gui::Gui(const Data& dataInit, const Tempo& tempoInit, const Timer& timerInit, QWidget* parent)
+Gui::Gui(Data dataInit, Tempo tempoInit, Timer timerInit, QWidget* parent)
     : QWidget(parent),
-      data(dataInit),
-      tempo(tempoInit),
-      timer(timerInit) {
+      data(std::move(dataInit)),
+      tempo(std::move(tempoInit)),
+      timer(std::move(timerInit)) {
+
 
     setWindowTitle("App");
     resize(800, 600);

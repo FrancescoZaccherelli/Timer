@@ -30,12 +30,13 @@ Data::Data(int giorno, int mese, int anno)
 // Avanza di un giorno in base al mese o all'anno
 void Data::avanzaData() {
     giorno++;
-    if (giorno >= giorniFinali[mese-1]){
+    if (giorno >giorniFinali[mese-1]){
         giorno = 1;
-        mese++;
-        if (mese++ >= 12) {
+        mese+=1;
+        if (mese >= 12) {
             mese = 1;
             anno++;
+            giorniFinali[1] = (anno % 4 == 0) ? 29 : 28;
         }
     }
 }

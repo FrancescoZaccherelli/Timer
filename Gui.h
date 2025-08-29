@@ -14,7 +14,7 @@
 class Gui : public QWidget {
 public:
     // Riceve i dati dei costruttori dal main
-    explicit Gui(const Data& dataInit, const Tempo& tempoInit, const Timer& timerInit, QWidget* parent = nullptr);
+    explicit Gui(const Data dataInit, const Tempo tempoInit, const Timer timerInit, QWidget* parent = nullptr);
 
 private:
     // vari parti della ui

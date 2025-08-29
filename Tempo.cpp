@@ -5,8 +5,8 @@
 #include "Tempo.h"
 #include <stdexcept>
 
-Tempo::Tempo(int ora, int minuto, int secondo, Data* data)
-    : ora(ora), minuto(minuto), secondo(secondo), data(data) {
+Tempo::Tempo(int ora, int minuto, int secondo, std::unique_ptr<Data> data)
+    : ora(ora), minuto(minuto), secondo(secondo), data(std::move(data)) {
     if (ora < 0 || ora > 23) {
         throw std::invalid_argument("Tempo: ora non valida (0-23)");
     }

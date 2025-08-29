@@ -6,7 +6,8 @@
 #define TIMER_DATA_H
 
 #include <vector>
-#include <QVector>
+#include <string>
+
 enum class FormatoData{breve, esteso, americano};
 
 class Data {
@@ -17,7 +18,8 @@ private:
     FormatoData formato;
 
 
-    std::vector<int> giorniFinali={31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    std::vector<int> giorniFinali={ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     std::vector<std::string> m={ "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
 public:
     Data(int giorno, int mese, int anno);

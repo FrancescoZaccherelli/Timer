@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
             Data data(28, 2, 2025);
             Tempo tempo(23, 59, 56);
             Timer timer(0, 0, 10);
-            Gui window(data, tempo, timer);
+            Gui window(data, std::move(tempo), timer);
             window.show();
             return app.exec();
         }catch (std::invalid_argument& e) {
