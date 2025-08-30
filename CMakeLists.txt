@@ -20,3 +20,9 @@ target_link_libraries(TimerQt Qt5::Widgets)
 include(CTest)
 enable_testing()
 add_subdirectory(test)
+
+qt5_add_resources(APP_QRC
+        resources.qrc
+)
+target_sources(TimerQt PRIVATE ${APP_QRC})
+

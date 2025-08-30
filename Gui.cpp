@@ -2,6 +2,7 @@
 #include "Gui.h"
 #include <QString>
 #include <QChar>
+#include <QMessageBox>
 
 Gui::Gui(Data dataInit, Tempo tempoInit, Timer timerInit, QWidget* parent)
     : QWidget(parent),
@@ -11,6 +12,7 @@ Gui::Gui(Data dataInit, Tempo tempoInit, Timer timerInit, QWidget* parent)
 
 
     setWindowTitle("App");
+
     resize(800, 600);
 
     // Layout principali e vari menù a tendina e etichette
@@ -18,7 +20,8 @@ Gui::Gui(Data dataInit, Tempo tempoInit, Timer timerInit, QWidget* parent)
 
     topLayout = new QHBoxLayout();
     dataLabel = new QLabel("Data");
-    oraLabel = new QLabel("Ora");
+    oraLabel = new QLabel("Ora"); // si riferisce al tempo
+
 
     dataFmtCombo = new QComboBox();
     dataFmtCombo->addItems({"Breve", "Esteso", "Americano"});
@@ -35,8 +38,14 @@ Gui::Gui(Data dataInit, Tempo tempoInit, Timer timerInit, QWidget* parent)
     topLayout->addWidget(tempoFmtCombo);
     mainLayout->addLayout(topLayout);
 
+    dataLabel->setObjectName("dataLabel");
+    oraLabel->setObjectName("oraLabel");
+
+
+
     // Display del Timer e pulsanti
     timerLabel = new QLabel("00:00:00");
+    timerLabel->setObjectName("timerLabel");
     timerLabel->setAlignment(Qt::AlignCenter);
     mainLayout->addWidget(timerLabel);
 
@@ -50,7 +59,7 @@ Gui::Gui(Data dataInit, Tempo tempoInit, Timer timerInit, QWidget* parent)
     // Stato iniziale etichette in base a come scritti
     dataLabel->setText(QString::fromStdString(data.toString(FormatoDataCorrente())));
     oraLabel->setText(QString::fromStdString(tempo.toString(FormatoTempoCorrente())));
-    timerLabel->setText(QString("%1,%2,%3")
+    timerLabel->setText(QString("%1:%2:%3")
                             .arg(timer.getOra(), 2, 10, QChar('0'))
                             .arg(timer.getMinuto(), 2, 10, QChar('0'))
                             .arg(timer.getSecondo(), 2, 10, QChar('0')));
@@ -73,6 +82,17 @@ Gui::Gui(Data dataInit, Tempo tempoInit, Timer timerInit, QWidget* parent)
             this, &Gui::CambioFormatoData);
     connect(tempoFmtCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
             this, &Gui::CambioFormatoTempo);
+
+
+    // Cambi grafici
+
+    this->setStyleSheet( "#dataLabel { font-size: 30px;font.weight: 30px; color: #000000; }"
+                           "#oraLabel  { font-size: 30px;font-weight: 30px; color: #000000; }"
+                           "#timerLabel { ""font-size: 40px; ""color: #000000; background-image: url(:/immagini/timersfondo.png); background-position: center; background-repeat: no-repeat;}"
+                           "QWidget { background-color: #AAF0D1;}"
+                           "QPushButton { font-size: 20px; font-weight: 300px; color: #000000; }"
+                           "QComboBox { font-size: 20px; font-weight: 300px; color: #000000; }"
+                           );
 }
 
 
@@ -103,15 +123,23 @@ void Gui::onTickOrologio() {
 // Indietreggia di 1
 void Gui::onTickTimer() {
     timer.tick();
-    timerLabel->setText(QString("%1,%2,%3")
+    timerLabel->setText(QString("%1:%2:%3")
                             .arg(timer.getOra(), 2, 10, QChar('0'))
                             .arg(timer.getMinuto(), 2, 10, QChar('0'))
                             .arg(timer.getSecondo(), 2, 10, QChar('0')));
+    if (!timerFinito&& timer.getOra() == 0&& timer.getMinuto() == 0&& timer.getSecondo() == 0){
+        orologioTimer->stop();
+        timerFinito = true;
+        QMessageBox::about(this, "Timer", "Il timer è terminato.");
+        }
+
 }
+
 
 // Avvia se fermo
 void Gui::onStart() {
     if (!orologioTimer->isActive()) {
+        timerFinito = false;
         orologioTimer->start(1000);
     }
 }

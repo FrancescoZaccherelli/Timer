@@ -6,6 +6,9 @@
 #include <QComboBox>
 #include <QTimer>
 #include <QHBoxLayout>
+#include <QIcon>
+#include <QGuiApplication>
+
 
 #include "Data.h"
 #include "Tempo.h"
@@ -50,6 +53,7 @@ private:
     void onStop();
     void CambioFormatoData(int);
     void CambioFormatoTempo(int);
+    bool timerFinito = false;
 };
 
 #endif //TIMER_GUI_H
